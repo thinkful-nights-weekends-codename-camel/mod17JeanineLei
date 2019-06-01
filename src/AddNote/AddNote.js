@@ -4,6 +4,7 @@ import ApiContext from '../ApiContext'
 import config from '../config'
 import './AddNote.css'
 import NoteValidationError from './NoteValidationError';
+import AddNoteErrorBoundary from '../App/AddNoteErrorBoundary';
 
 export default class AddNote extends Component {
   state = {
@@ -59,6 +60,7 @@ export default class AddNote extends Component {
       folderId: e.target['note-folder-id'].value,
       modified: new Date(),
     }
+
     fetch(`${config.API_ENDPOINT}/notes`, {
       method: 'POST',
       headers: {
@@ -84,6 +86,8 @@ export default class AddNote extends Component {
     const fieldErrors = {...this.state.validationMsgs};
     let hasError = false;
 
+    // let newDate = new Date().getDateWRONG(); // for Error Boundary Testing
+
     inputVal = inputVal.trim();
     if (inputVal.length === 0) {
       fieldErrors.noteName = 'Please enter a Note name.';
@@ -97,6 +101,7 @@ export default class AddNote extends Component {
         hasError = false;
       }
     }
+
     this.setState({
       validationMsgs: fieldErrors,
       noteNameValid: !hasError
@@ -144,6 +149,7 @@ export default class AddNote extends Component {
     return (
       <section className='AddNote'>
         <h2>Create a note</h2>
+        <AddNoteErrorBoundary>
         <NotefulForm onSubmit={e => this.handleSubmit(e)}>
           <div className='field'>
             <label htmlFor='note-name-input'>
@@ -191,6 +197,7 @@ export default class AddNote extends Component {
             </button>
           </div>
         </NotefulForm>
+        </AddNoteErrorBoundary>
       </section>
     )
   }

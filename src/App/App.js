@@ -10,6 +10,7 @@ import AddNote from '../AddNote/AddNote'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import './App.css'
+import ErrorBoundary from './AddNoteErrorBoundary';
 
 class App extends Component {
   state = {
@@ -111,10 +112,12 @@ class App extends Component {
           path='/add-folder'
           component={AddFolder}
         />
+        <ErrorBoundary>
         <Route
           path='/add-note'
           component={AddNote}
         />
+        </ErrorBoundary>
       </>
     )
   }
