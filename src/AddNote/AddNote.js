@@ -50,8 +50,8 @@ export default class AddNote extends Component {
     e.preventDefault()
     const noteName = this.state.noteName;
     console.log('noteName: ', noteName);
-    const noteContent = this.state.noteContent;
-    const noteFolderId = this.state.noteFolderId;
+    // const noteContent = this.state.noteContent;
+    // const noteFolderId = this.state.noteFolderId;
 
     const newNote = {
       name: e.target['note-name'].value,
@@ -111,15 +111,7 @@ export default class AddNote extends Component {
     if (inputVal.length === 0) {
       fieldErrors.noteContent = 'Please type something for your note.';
       hasError = true;
-    } else {
-      if (inputVal.length < 3) {
-        fieldErrors.noteContent = 'Note content should be more than 3 characters';
-        hasError = true;
-      } else {
-        fieldErrors.noteContent = '';
-        hasError = false;
-      }
-    }
+    } 
     this.setState({
       validationMsgs: fieldErrors,
       noteContentValid: !hasError
@@ -130,7 +122,7 @@ export default class AddNote extends Component {
     const fieldErrors = {...this.state.validationMsgs};
     let hasError = false;
 
-    if(inputVal=== "empty") {
+    if(inputVal=== "...") {
       fieldErrors.noteFolderId = 'Please select a folder';
       hasError = true;
     } 
@@ -179,8 +171,9 @@ export default class AddNote extends Component {
             <label htmlFor='note-folder-select'>
               Folder
             </label>
-            <select id='note-folder-select' name='note-folder-id'>
-              <option value={null} onChange={e => this.updateNoteFolderId(e.target.value)}>...</option>
+            <select id='note-folder-select' name='note-folder-id' 
+              onChange={e => this.updateNoteFolderId(e.target.value)}>
+              <option value={null} >...</option>
               {folders.map(folder =>
                 <option key={folder.id} value={folder.id}>
                   {folder.name}
