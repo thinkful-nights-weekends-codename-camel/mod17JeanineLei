@@ -56,6 +56,7 @@ export default class AddFolder extends Component {
         console.error({ error })
       })
   }
+
   validateFolderName(inputVal) {
     const fieldErrors = { ...this.state.validationmsgs };
     let hasError = false;
@@ -72,14 +73,15 @@ export default class AddFolder extends Component {
         fieldErrors.foldername = '';
         hasError = false;
       }
-
-      this.setState({
-        validationmsgs: fieldErrors,
-        foldernameValid: !hasError
-      },
-        this.formValid);
     }
+
+    this.setState({
+      validationmsgs: fieldErrors,
+      foldernameValid: !hasError
+    },
+      this.formValid);
   }
+
   formValid() {
     this.setState({
       formValid: this.state.foldernameValid
