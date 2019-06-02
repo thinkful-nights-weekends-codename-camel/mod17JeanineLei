@@ -1,6 +1,5 @@
 {
     "version": 2,
-    "alias": "jadedtofu-noteful.com",
     "name": "noteful-app",
     "routes": [
         {
@@ -13,3 +12,4 @@
         }
     ]
   }
+
