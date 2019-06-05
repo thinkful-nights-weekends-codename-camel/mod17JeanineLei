@@ -25,16 +25,13 @@ export default class AddFolder extends Component {
   updateFolder(foldername) {
     this.setState({ foldername },
       () => { this.validateFolderName(foldername) }
-      //validate folderfunction goes here)
     )
   }
+
   handleSubmit (e) {
-    e.preventDefault()
-    // const { foldername } = this.setState;
-    const foldername=this.state.foldername;
-    console.log('foldername: ', foldername);
+    e.preventDefault();
     const folder = {
-      name: e.target['folder-name'].value
+      name: this.state.foldername
     }
     fetch(`${config.API_ENDPOINT}/folders`, {
       method: 'POST',
@@ -97,7 +94,12 @@ export default class AddFolder extends Component {
             <label htmlFor='folder-name-input'>
               Name
             </label>
-            <input type='text' id='folder-name-input' name='folder-name' onChange={e => this.updateFolder(e.target.value)} />
+            <input 
+              value={this.state.foldername}
+              type='text' 
+              id='folder-name-input' 
+              name='folder-name' 
+              onChange={e => this.updateFolder(e.target.value)} />
             <FolderValidationErr
               hasError={!this.state.foldernameValid}
               message={this.state.validationmsgs.foldername}

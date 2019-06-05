@@ -27,6 +27,7 @@ export default class AddNote extends Component {
       push: () => { }
     },
   }
+
   static contextType = ApiContext;
 
   updateNoteName(noteName) {
@@ -35,7 +36,7 @@ export default class AddNote extends Component {
     );
   }
 
-  updateNotecontent(noteContent) {
+  updateNoteContent(noteContent) {
     this.setState({noteContent},
       () => {this.validateNoteContent(noteContent)}
     );
@@ -49,16 +50,12 @@ export default class AddNote extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const noteName = this.state.noteName;
-    console.log('noteName: ', noteName);
-    // const noteContent = this.state.noteContent;
-    // const noteFolderId = this.state.noteFolderId;
 
     const newNote = {
-      name: e.target['note-name'].value,
-      content: e.target['note-content'].value,
-      folderId: e.target['note-folder-id'].value,
-      modified: new Date(),
+      name: this.state.noteName,
+      content: this.state.noteContent,
+      folderId: this.state.noteFolderId,
+      modified: new Date()
     }
 
     fetch(`${config.API_ENDPOINT}/notes`, {
@@ -134,7 +131,7 @@ export default class AddNote extends Component {
 
     this.setState({
       validationMsgs: fieldErrors,
-      noteFolderId: !hasError
+      noteFolderIdValid: !hasError
     }, this.formValid);
   }
 
@@ -155,8 +152,12 @@ export default class AddNote extends Component {
             <label htmlFor='note-name-input'>
               Name
             </label>
-            <input type='text' id='note-name-input' name='note-name'
-             onChange={e => this.updateNoteName(e.target.value)}/>
+            <input 
+              value={this.state.noteName}
+              type='text' 
+              id='note-name-input' 
+              name='note-name'
+              onChange={e => this.updateNoteName(e.target.value)}/>
              <NoteValidationError
               hasError={!this.state.noteNameValid}
               message={this.state.validationMsgs.noteName}
@@ -166,8 +167,11 @@ export default class AddNote extends Component {
             <label htmlFor='note-content-input'>
               Content
             </label>
-            <textarea id='note-content-input' name='note-content' 
-              onChange={e => this.updateNotecontent(e.target.value)}/>
+            <textarea 
+              value={this.state.noteContent}
+              id='note-content-input' 
+              name='note-content' 
+              onChange={e => this.updateNoteContent(e.target.value)}/>
             <NoteValidationError
               hasError={!this.state.noteContent}
               message={this.state.validationMsgs.noteContent}
@@ -177,7 +181,10 @@ export default class AddNote extends Component {
             <label htmlFor='note-folder-select'>
               Folder
             </label>
-            <select id='note-folder-select' name='note-folder-id' 
+            <select 
+              value={this.state.noteFolderId}
+              id='note-folder-select' 
+              name='note-folder-id' 
               onChange={e => this.updateNoteFolderId(e.target.value)}>
               <option value={null} >...</option>
               {folders.map(folder =>
