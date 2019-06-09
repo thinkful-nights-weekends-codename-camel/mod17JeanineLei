@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function NoteValidationError(props) {
   if(props.hasError) {
@@ -8,4 +9,9 @@ export default function NoteValidationError(props) {
   }
 
   return <></>
+}
+
+NoteValidationError.propTypes = {
+  hasError: PropTypes.string,
+  message: PropTypes.string
 }
